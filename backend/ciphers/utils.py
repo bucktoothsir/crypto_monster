@@ -1,5 +1,6 @@
 from __future__ import division
 import string
+import math
 from typing import List
 
 ALPHABET = string.ascii_letters
@@ -123,6 +124,31 @@ def get_possible_single_keys(letter_and_per_sorted: list, k: int) -> list:
             letter, per = item
             mutual_ic += LETTER_FREQUENCIES_OF_ENGLISH[IDX_TO_CHAR[(CHAR_TO_IDX[letter] - i) % LENGTH_OF_ALPHABET]] * per
         key_to_mutual_ic[i] = mutual_ic
+    key_mutual_ic_sorted = sorted(key_to_mutual_ic.items(), key=lambda a: (-a[1], a[0]))
+    possible_keys = [item[0] for item in key_mutual_ic_sorted[:k]]
+    return possible_keys
+
+
+def get_possible_linear_keys(letter_and_per_sorted: list, k: int) -> list:
+    """
+    Return the first k possible keys sorting by mutual ic.
+    For the Caecar cipher, k = 1.
+
+    Args:
+        letter_and_per_sorted: A List containing items(letter(lower_case), percentage), sorting by the percentage in the descending order.
+    Return:
+        A list containing [best_key(int), best_mutual_ic(float)]
+    """
+    key_to_mutual_ic = {}#dict(zip(range(1, LENGTH_OF_ALPHABET), [0]*LENGTH_OF_ALPHABET))
+    for i in range(1, LENGTH_OF_ALPHABET):
+        for j in range(LENGTH_OF_ALPHABET):
+            mutual_ic = 0
+            if(math.gcd(i, 26) == 1):
+                inv = pow(i, -1, 26)
+                for item in letter_and_per_sorted:
+                    letter, per = item
+                    mutual_ic += LETTER_FREQUENCIES_OF_ENGLISH[IDX_TO_CHAR[inv * (CHAR_TO_IDX[letter] - j) % LENGTH_OF_ALPHABET]] * per
+                key_to_mutual_ic[(i, j)] = mutual_ic
     key_mutual_ic_sorted = sorted(key_to_mutual_ic.items(), key=lambda a: (-a[1], a[0]))
     possible_keys = [item[0] for item in key_mutual_ic_sorted[:k]]
     return possible_keys

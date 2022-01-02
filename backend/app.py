@@ -4,8 +4,8 @@ Flask app.
 
 from flask import Flask
 
-from . import config
-from .routes import configure_routes
+import config
+from routes import configure_routes
 
 
 def create_app(config=config):
