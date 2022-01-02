@@ -40,8 +40,6 @@ jobs:
         run: |
           pip install pytest-github-actions-annotate-failures
           pip install wemake-python-styleguide
-      - name: Test with pytest
-        run: pytest
       - name: Wemake Python Stylguide
         uses: wemake-services/wemake-python-styleguide@0.16.0
         continue-on-error: true
