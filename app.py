@@ -24,12 +24,15 @@ def linear(mode):
         ret = {"status": "ok", "ciphertext": cipher}
     else:
         try:
-            plain = linear_decode(dic['ciphertext'], dic['a'], dic['b'])
+            plain = linear_decode(dic['ciphertext'], dic.get('a'), dic.get('b'))
         except Exception as e:
             print(e)
             ret = {"status": "failed"}
             return json.dumps(ret)
-        ret = {"status": "ok", "plaintext": plain}
+        if(len(plain) == 1):
+            ret = {"status": "ok", "plaintext": plain[0]}
+        else:
+            ret = {"status": "ok", "plaintext": plain[0], "a": plain[1], "b": plain[2]}
     return json.dumps(ret)
 
 

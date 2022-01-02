@@ -4,6 +4,7 @@ Linear cipher.
 
 import argparse
 import math
+from utils import count_letter_percentage, get_possible_linear_keys
 from utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
 
 
@@ -24,7 +25,7 @@ def linear_encode(plaintext: str, a: int, b: int) -> str:
     return ciphertext
 
 
-def linear_decode(ciphertext: str, a: int, b: int) -> str:
+def linear_decode_with_key(ciphertext: str, a: int, b: int) -> str:
     if(math.gcd(26, a) != 1):
         raise ValueError("Bad Key.")
     inv = pow(a, -1, 26)
@@ -40,6 +41,17 @@ def linear_decode(ciphertext: str, a: int, b: int) -> str:
                 c = c.upper()
         plaintext += c
     return plaintext
+
+
+def linear_decode(ciphertext: str, a: int = None, b: int = None) -> str:
+    if a and b:
+        plaintext = linear_decode_with_key(ciphertext, a, b)
+        return [plaintext]
+    else:
+        letter_and_per_sorted = count_letter_percentage(ciphertext)
+        a, b = get_possible_linear_keys(letter_and_per_sorted, 1)[0]
+        plaintext = linear_decode_with_key(ciphertext, a, b)
+        return [plaintext, a, b]
 
 
 if __name__ == "__main__":
