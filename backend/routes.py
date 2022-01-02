@@ -5,9 +5,9 @@ App routes.
 import json
 from flask import request
 
-from .ciphers.caesar_cipher import caesar_encode, caesar_decode
-from .ciphers.linear_cipher import linear_decode, linear_encode
-from .ciphers.vigenere_cipher import vigenere_encode, vigenere_decode
+from ciphers.caesar_cipher import caesar_encode, caesar_decode
+from ciphers.linear_cipher import linear_decode, linear_encode
+from ciphers.vigenere_cipher import vigenere_encode, vigenere_decode
 
 
 def configure_routes(app):
@@ -29,12 +29,15 @@ def configure_routes(app):
             ret = {'status': 'ok', 'ciphertext': cipher}
         else:
             try:
-                plain = linear_decode(dic['ciphertext'], dic['a'], dic['b'])
+                plain = linear_decode(dic['ciphertext'], dic.get('a'), dic.get('b'))
             except Exception as e:
                 print(e)
                 ret = {'status': 'failed'}
                 return json.dumps(ret)
-            ret = {'status': 'ok', 'plaintext': plain}
+            if(len(plain) == 1):
+                ret = {"status": "ok", "plaintext": plain[0]}
+            else:
+                ret = {"status": "ok", "plaintext": plain[0], "a": plain[1], "b": plain[2]}
         return json.dumps(ret)
 
     @app.route('/cipher/caesar/<mode>', methods=['POST'])

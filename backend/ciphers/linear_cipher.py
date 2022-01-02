@@ -1,16 +1,16 @@
 """
-Linear cipher.
+Linear cipher encoder and decoder.
 """
 
 import argparse
 import math
-from utils import count_letter_percentage, get_possible_linear_keys
-from utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
+from .utils import count_letter_percentage, get_possible_linear_keys
+from .utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
 
 
 def linear_encode(plaintext: str, a: int, b: int) -> str:
-    if(math.gcd(26, a) != 1):
-        raise ValueError("Bad Key.")
+    if(math.gcd(LENGTH_OF_ALPHABET, a) != 1):
+        raise ValueError('Bad Key.')
     ciphertext = ''
     for c in plaintext:
         upper = 0
@@ -26,9 +26,9 @@ def linear_encode(plaintext: str, a: int, b: int) -> str:
 
 
 def linear_decode_with_key(ciphertext: str, a: int, b: int) -> str:
-    if(math.gcd(26, a) != 1):
-        raise ValueError("Bad Key.")
-    inv = pow(a, -1, 26)
+    if(math.gcd(LENGTH_OF_ALPHABET, a) != 1):
+        raise ValueError('Bad Key.')
+    inv = pow(a, -1, LENGTH_OF_ALPHABET)
     plaintext = ''
     for c in ciphertext:
         upper = 0
