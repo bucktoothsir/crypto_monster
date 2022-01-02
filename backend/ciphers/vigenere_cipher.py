@@ -1,11 +1,9 @@
 """
-Decode Vigenere Cipher
+Vigenere Cipher encoder and decoder.
 """
 
-import argparse
-
-from utils import IDX_TO_CHAR, LENGTH_OF_ALPHABET, ALPHABET, CHAR_TO_IDX
-from utils import Friedman, count_letter_percentage, get_possible_single_keys, get_group_of_cipher
+from .utils import IDX_TO_CHAR, LENGTH_OF_ALPHABET, ALPHABET, CHAR_TO_IDX
+from .utils import Friedman, count_letter_percentage, get_possible_single_keys, get_group_of_cipher
 
 
 def vigenere_encode(plaintext: str, key: str) -> str:
@@ -81,44 +79,3 @@ def vigenere_decode_with_key(ciphertext: str, key: str) -> str:
             idx_of_key %= len(key_int_list)
         plaintext += c
     return plaintext
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--plaintext', type=str, default=None, help='Plaintext')
-    parser.add_argument('-pf', '--plaintext_file', type=str, default=None, help='Plaintext File')
-    parser.add_argument('-c', '--ciphertext', type=str, default=None, help='Vigenere Cipher')
-    parser.add_argument('-cf', '--ciphertext_file', type=str, default=None, help='Vigenere Cipher File')
-    parser.add_argument('-k', '--key', type=str, default=None, help='key to decode the cipher')
-    parser.add_argument('-kl', '--keylen', type=int, default=None, help='length of key')
-    args = parser.parse_args()
-    if args.plaintext or args.plaintext_file:
-        if args.plaintext:
-            plaintext = args.plaintext
-        else:
-            with open(args.plaintext_file) as f:
-                plaintext = f.read()
-        print("The plaintext is:\n%s" % plaintext)
-        print("The key is:\n%s" % args.key)
-        ciphertext = vigenere_encode(plaintext, args.key)
-        print("The ciphertext is:\n%s" % ciphertext)
-    elif args.ciphertext or args.ciphertext_file:
-        if args.ciphertext:
-            ciphertext = args.ciphertext
-        else:
-            with open(args.ciphertext_file) as f:
-                ciphertext = f.read()
-        print("The ciphertext is:\n%s" % ciphertext)
-        key = None
-        if args.key:
-            print('The key is:\n%s' % args.key)
-            key = args.key
-        keylen = None
-        if args.keylen:
-            print('The length of key is:\n%d' % args.keylen)
-            keylen = args.keylen
-        res = vigenere_decode(ciphertext, key, keylen)
-        if len(res) > 1:
-            plaintext, possible_key = res
-            print("The possible key is\n%s" % possible_key)
-        print("The plaintext is:\n%s" % plaintext)
