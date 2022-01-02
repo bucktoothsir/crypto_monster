@@ -5,9 +5,9 @@ App routes.
 import json
 from flask import request
 
-from ciphers.caesar_cipher import caesar_encode, caesar_decode
-from ciphers.linear_cipher import linear_decode, linear_encode
-from ciphers.vigenere_cipher import vigenere_encode, vigenere_decode
+from .ciphers.caesar_cipher import caesar_encode, caesar_decode
+from .ciphers.linear_cipher import linear_decode, linear_encode
+from .ciphers.vigenere_cipher import vigenere_encode, vigenere_decode
 
 
 def configure_routes(app):

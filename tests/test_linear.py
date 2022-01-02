@@ -13,4 +13,4 @@ def test_linear():
         test_str = ''.join(random.choice(letters) for i in range(str_len))
         test_a = random.choice(a_param)
         test_b = random.randint(0, 25)
-        assert test_str == linear_decode(linear_encode(test_str, test_a, test_b), test_a, test_b)
+        assert test_str == linear_decode(linear_encode(test_str, test_a, test_b), test_a, test_b)[0]

@@ -52,24 +52,3 @@ def linear_decode(ciphertext: str, a: int = None, b: int = None) -> str:
         a, b = get_possible_linear_keys(letter_and_per_sorted, 1)[0]
         plaintext = linear_decode_with_key(ciphertext, a, b)
         return [plaintext, a, b]
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--plaintext', type=str, default='', help='Plaintext')
-    parser.add_argument('-c', '--ciphertext', type=str, default='', help='Ciphertext')
-    parser.add_argument('-a', type=int, default=None, help='linear cypher: c=a*p+b mod 26')
-    parser.add_argument('-b',  type=int, default=None, help='linear cypher: c=a*p+b mod 26')
-    args = parser.parse_args()
-    if args.plaintext:
-        if args.a and args.b:
-            print("The plaintext is: \"{}\".".format(args.plaintext))
-            print("a is: {} b is: {}.".format(args.a, args.b))
-            ciphertext = linear_encode(args.plaintext, args.a, args.b)
-            print("The ciphertext is : \"{}\".".format(ciphertext))
-    if args.ciphertext:
-        if args.a and args.b:
-            print("The ciphertext is: \"{}\".".format(args.ciphertext))
-            print("a is: {} b is: {}.".format(args.a, args.b))
-            plaintext = linear_decode(args.ciphertext, args.a, args.b)
-            print("The plaintext is : \"{}\".".format(plaintext))
