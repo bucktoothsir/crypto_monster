@@ -7,7 +7,7 @@ from backend.ciphers.linear_cipher import linear_encode, linear_decode
 def test_linear():
     num_tests = 1000
     letters = string.ascii_letters
-    a_param = [x for x in range(26) if(math.gcd(x, 26) == 1)]
+    a_param = [x for x in range(1,26) if(math.gcd(x, 26) == 1)]
     for i in range(num_tests):
         str_len = random.randint(1, 15)
         test_str = ''.join(random.choice(letters) for i in range(str_len))

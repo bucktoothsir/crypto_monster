@@ -44,7 +44,7 @@ def linear_decode_with_key(ciphertext: str, a: int, b: int) -> str:
 
 
 def linear_decode(ciphertext: str, a: int = None, b: int = None) -> str:
-    if a and b:
+    if a is not None and b is not None:
         plaintext = linear_decode_with_key(ciphertext, a, b)
         return [plaintext]
     else:
