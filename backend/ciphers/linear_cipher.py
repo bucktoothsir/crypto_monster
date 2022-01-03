@@ -2,7 +2,6 @@
 Linear cipher encoder and decoder.
 """
 
-import argparse
 import math
 from .utils import count_letter_percentage, get_possible_linear_keys
 from .utils import IDX_TO_CHAR, CHAR_TO_IDX, LENGTH_OF_ALPHABET, ALPHABET
