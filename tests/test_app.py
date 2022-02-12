@@ -2,10 +2,13 @@
 App test
 """
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'backend'))
 import json
 import pytest
 
-from backend.app import create_app
+from backend.app import app
 
 
 PLAINTEXT = 'If he had anything confidential to say.'
@@ -25,7 +28,6 @@ VIGENERE_KEY_LEN = len(VIGENERE_KEY)
 
 @pytest.fixture
 def client():
-    app = create_app()
     with app.test_client() as client:
         yield client
 
