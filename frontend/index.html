@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/dist/output.css" rel="stylesheet">
+  <link href="/src/index.css" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@latest/dist/flowbite.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-emerald-200/50">
+  <div class="flex flex-row mt-36 h-96 w-full place-content-center">
+    <div id="plaintext" class="w-1/4 h-full mx-4">
+      <header class="border-2 border-green-700 w-full h-1/6 rounded-t-lg bg-white shadow-lg shadow-2xl shadow-red-800">
+        <p class="ml-1 mt-3 h-1/6 text-2xl font-bold font-mono align-bottom text-center text-green-700"> Plain Text </p>
+      </header>
+      <textarea
+        id="plaintext_textarea"
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        class="w-full h-5/6 text-xl font-sans antialiased font-light text-green-700 focus:outline-none focus:ring-4 focus:ring-green-700 focus:border-transparent border-b-2 border-l-2 border-r-2 border-green-700 resize-none bg-white rounded-b-lg shadow-2xl shadow-green-800" 
+        aria-label="Content" 
+        spellcheck="false"></textarea>
+    </div>
+    <div id="ciphers" class="w-1/5 mx-8 h-full">
+      <header>
+        <button id="cipher_type" data-dropdown-toggle="dropdown" value='caesar' class="place-content-center h-14 bg-green-500  w-full text-white focus:ring-4 focus:ring-green-800 rounded-lg text-lg px-4 py-2.5 text-center inline-flex items-center" type="button">
+          <p id="cipher_type_text" class="font-bold antialiased font-mono">Caesar Cipher</p><svg class="ml-2 w-4 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+        <!-- Dropdown menu -->
+        <div id="dropdown" class="hidden z-10 w-1/5 list-none bg-green-500 rounded divide-y divide-green-700 shadow dark:bg-green-700">
+            <ul class="py-1" aria-labelledby="cipher_type">
+              <li>
+                <p id="caesar" onclick="select_cipher(this)" class="block font-bold antialiased font-mono py-2 px-4 text-lg text-white hover:bg-green-700 dark:hover:bg-green-600 dark:text-green-200 dark:hover:text-white">Caesar Cipher</p>
+              </li>
+              <li>
+                <p id="linear" onclick="select_cipher(this)" class="block font-bold antialiased font-mono py-2 px-4 text-lg text-white hover:bg-green-700 dark:hover:bg-green-600 dark:text-green-200 dark:hover:text-white">linear Cipher</a>
+              </li>
+              <li>
+                <p id="vigenere" onclick="select_cipher(this)" class="block py-2 px-4 font-bold antialiased font-mono py-2 px-4 text-lg text-white hover:bg-green-700 dark:hover:bg-green-600 dark:text-green-200 dark:hover:text-white">Vigenère Cipher</a>
+              </li>
+            </ul>
+        </div>
+      </header> 
+      <div class="mt-8">
+        <div id="caesar_info" class="border-2 rounded-lg h-24 shadow-lg shadow-green-800 border-green-600 bg-white">
+          <div class="relative z-0 mt-4 mb-4 w-4/5 ml-4 group">
+            <input id="caesar_shift" type="caesar_shift" name="caesar_floating_shift" class="ml-2 text-center font-bold antialiased font-mono block py-2.5 px-0 w-full text-lg text-green-600 bg-transparent border-0 border-b-2 border-green-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+            <label for="caesar_floating_shift" class="absolute text-base text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              <p class="text-green-700 font-bold antialiased font-mono">Shift
+              </p>
+            </label>
+          </div>
+        </div>
+        <div id="linear_info" class="hidden border-2 h-48 rounded-lg shadow-lg shadow-green-800 border-green-600 bg-white">
+          <div class="relative z-0 mt-4 mb-4 w-4/5 ml-4 group">
+            <input id="linear_slope" name="linear_floating_slope" class="ml-2 text-center font-bold antialiased font-mono block py-2.5 px-0 w-full text-lg text-green-600 bg-transparent border-0 border-b-2 border-green-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+            <label for="linear_floating_slope" class="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              <p class="text-green-700 font-bold antialiased font-mono">Slope/A</p></label>
+          </div>
+          <div class="relative z-0 mt-10 mb-4 w-4/5 ml-4 group">
+            <input id="linear_intercept" name="linear_floating_intercept" class="ml-2 text-center font-bold antialiased font-mono block py-2.5 px-0 w-full text-lg text-green-600 bg-transparent border-0 border-b-2 border-green-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+            <label for="linear_floating_intercept" class="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              <p class="text-green-700 font-bold antialiased font-mono">Intercept/B</p></label>
+          </div>
+        </div>
+        <div id="vigenere_info" class="hidden border-2 h-48 rounded-lg shadow-lg shadow-green-800 border-green-600 bg-white">
+          <div class="relative z-0 mt-4 mb-4 w-4/5 ml-4 group">
+            <input id="vigenere_key" name="vigenere_floating_key" class="ml-2 text-center font-bold antialiased font-mono block py-2.5 px-0 w-full text-lg text-green-600 bg-transparent border-0 border-b-2 border-green-600 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+            <label for="vigenere_floating_key" class="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              <p class="text-green-700 font-bold antialiased font-mono">Key</p></label>
+          </div>
+          <div class="relative z-0 mt-10 mb-4 w-4/5 ml-4 group">
+            <input id="vigenere_key_len" name="vigenere_floating_len" class="ml-2 text-center font-bold antialiased font-mono block py-2.5 px-0 w-full text-lg text-green-600 bg-transparent border-0 border-b-2 border-green-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+            <label for="vigenere_floating_len" class="absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              <p class="text-green-700 font-bold antialiased font-mono">Key Length</p></label>
+          </div>
+        </div>
+      </div
+    </div>
+    <div id="encode_and_decode" class="mt-5">
+      <div>
+      <button class="float-right" data-tooltip-target="decode-tooltip" id="encode" type="button"><i class='bx bxs-message-rounded-dots' style='color:#19a822' ></i></button>
+        <div id="decode-tooltip" role="tooltip" class="w-1/5 inline-block absolute invisible z-10 py-2 px-3 font-medium text-white bg-green-400 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+          <p class="text-white font-bold text-sm antialiased font-mono text-justify">
+            Wanna decode without key?
+            Just leave the key or key length empty! Note that the longer the ciphertext, the better it works.
+          </p>
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+      </div>
+      <div class="flex flex-row ml-6">
+        <button id="encode" onclick="encode()" type="button" class="mt-4 font-bold antialiased font-mono bg-green-500 w-1/2 text-white hover:bg-green-800 focus:ring-4 focus:ring-green-800 font-medium rounded-full text-lg px-5 py-2.5 text-center mr-2 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">Encode</button>
+        <button id="decode" onclick="decode()" type="button" class=" mt-4 font-bold antialiased font-mono bg-green-500 w-1/2 text-white hover:bg-green-800 focus:ring-4 focus:ring-green-800 font-medium rounded-full text-lg px-5 py-2.5 text-center mr-2 mb-2 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">Decode</button>
+      </div> 
+    </div>
+    </div>
+
+    <div id="ciphertext" class="w-1/4 mx-4 h-96">
+      <header class="border-2 border-green-700 w-full h-1/6 rounded-t-lg bg-white shadow-lg shadow-2xl shadow-red-800">
+        <p class="ml-1 mt-3 h-1/6 text-2xl font-bold font-mono align-bottom text-center text-green-700"> Cipher Text </p>
+      </header>
+      <textarea
+        id="ciphertext_textarea"
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        class="h-5/6 w-full text-xl font-sans antialiased font-light text-green-700 focus:outline-none focus:ring-4 focus:ring-green-700 focus:border-transparent border-b-2 border-l-2 border-r-2 border-green-700 resize-none bg-white rounded-b-lg shadow-2xl shadow-green-800" 
+        aria-label="Content" 
+        spellcheck="false"></textarea>
+    </div>
+
+  </div>
+  <script src="https://unpkg.com/flowbite@1.3.3/dist/flowbite.js"></script>
+  <script src="/src/index.js"></script>
+</body>
+</html>

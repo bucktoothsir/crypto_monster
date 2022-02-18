@@ -17,10 +17,7 @@ def configure_routes(app):
 
     @app.route('/cipher/linear/<mode>', methods=['POST'])
     def linear(mode):
-        print('here')
-        print(request.data)
         data = request.data.decode('utf-8')
-        print(data)
         dic = json.loads(data)
         if(mode == 'encode'):
             try:
@@ -49,6 +46,8 @@ def configure_routes(app):
         dic = json.loads(data)
         if(mode == 'encode'):
             try:
+                print('type of key')
+                print(type(dic['key']))
                 cipher = caesar_encode(dic['plaintext'], dic['key'])
             except Exception as e:
                 print(e)
