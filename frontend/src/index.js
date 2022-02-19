@@ -40,8 +40,8 @@ async function encode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((decode_res) => {
-      update_ciphertext(decode_res)
+    .then((encode_res) => {
+      update_ciphertext(encode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -60,8 +60,8 @@ async function encode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((decode_res) => {
-      update_ciphertext(decode_res)
+    .then((encode_res) => {
+      update_ciphertext(encode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -79,8 +79,8 @@ async function encode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((decode_res) => {
-      update_ciphertext(decode_res)
+    .then((encode_res) => {
+      update_ciphertext(encode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -103,8 +103,8 @@ async function decode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((encode_res) => {
-      update_plaintext(encode_res)
+    .then((decode_res) => {
+      update_plaintext(decode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -123,8 +123,8 @@ async function decode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((encode_res) => {
-      update_plaintext(encode_res)
+    .then((decode_res) => {
+      update_plaintext(decode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -143,8 +143,8 @@ async function decode() {
       "method": "post",
       "body": JSON.stringify(data)})
     .then((response) => response.json())
-    .then((encode_res) => {
-      update_plaintext(encode_res)
+    .then((decode_res) => {
+      update_plaintext(decode_res)
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -152,14 +152,21 @@ async function decode() {
   }
 }
 
-function update_ciphertext(decode_res) {
-  if (decode_res.status == 'ok'){
-    document.getElementById("ciphertext_textarea").value = decode_res.ciphertext
+function update_ciphertext(encode_res) {
+  if (encode_res.status == 'ok'){
+    document.getElementById("ciphertext_textarea").style.height = document.getElementById("plaintext_textarea").style.height 
+    document.getElementById("ciphertext_textarea").value = encode_res.ciphertext
   }
 }
 
-function update_plaintext(encode_res) {
-  if (encode_res.status == 'ok'){
-    document.getElementById("plaintext_textarea").value = encode_res.plaintext
+function update_plaintext(decode_res) {
+  if (decode_res.status == 'ok'){
+    document.getElementById("plaintext_textarea").style.height = document.getElementById("ciphertext_textarea").style.height 
+    document.getElementById("plaintext_textarea").value = decode_res.plaintext
   }
+}
+
+function auto_grow(element) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight)+"px";
 }
