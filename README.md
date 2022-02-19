@@ -6,8 +6,7 @@ A website to encode and decode classical ciphers. Now have support
 3. Vigenere Cipher
 
 
-![](media/st1.png){:height="50%" width="50%"}
-<img src="media/st1.png" width="50%" height="50%" />
+<img src="media/st1.png" width="70%" height="70%" />
 
 Our algorithm supports decoding without key. Note that the longer the ciphers, the better it works. 
 
