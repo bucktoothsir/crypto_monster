@@ -11,10 +11,11 @@ A website to encode and decode classical ciphers. Now have support
 Our algorithm supports decoding without key. Note that the longer the ciphers, the better it works. 
 
 
-![](media/st2.png)
+<img src="media/st2.png" width="80%" height="80%" />
+
 
 For Vigenere Cipher, you can choos to decode just with the length of the key or even nothing.
 
 
-![](media/st3.png)
-![](media/st4.png)
+<img src="media/st3.png" width="80%" height="80%" />
+<img src="media/st4.png" width="80%" height="80%" />
