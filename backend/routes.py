@@ -46,8 +46,6 @@ def configure_routes(app):
         dic = json.loads(data)
         if(mode == 'encode'):
             try:
-                print('type of key')
-                print(type(dic['key']))
                 cipher = caesar_encode(dic['plaintext'], dic['key'])
             except Exception as e:
                 print(e)

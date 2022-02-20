@@ -29,11 +29,11 @@ def vigenere_encode(plaintext: str, key: str) -> str:
     return ciphertext
 
 
-def vigenere_decode(ciphertext: str, key: str = '', keylen: int = None) -> str:
-    if key:
+def vigenere_decode(ciphertext: str, key: str = None, keylen: int = None) -> str:
+    if key is not None:
         plaintext = vigenere_decode_with_key(ciphertext, key)
         return [plaintext]
-    elif keylen:
+    elif keylen is not None:
         plaintext, possbile_key = vigenere_decode_with_keylen(ciphertext, keylen)
         return [plaintext, possbile_key]
     else:

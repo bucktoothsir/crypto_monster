@@ -41,7 +41,7 @@ def caesar_decode_with_key(ciphertext: str, key: int) -> str:
 
 
 def caesar_decode(ciphertext: str, key: int = None) -> str:
-    if key:
+    if key is not None:
         plaintext = caesar_decode_with_key(ciphertext, key)
         return [plaintext]
     else:
