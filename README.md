@@ -19,3 +19,13 @@ For Vigenere Cipher, you can choos to decode just with the length of the key or 
 
 <img src="media/st3.png" width="80%" height="80%" />
 <img src="media/st4.png" width="80%" height="80%" />
+
+## Deployment
+### Backend
+The backend is hosted on AWS Lambda and AWS API Gateway. We employ Zappa for deployment automation.
+
+```bash
+cd backend
+pipenv shell
+zappa update dev
+```
