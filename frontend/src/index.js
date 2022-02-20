@@ -1,4 +1,4 @@
-var API = "https://7omx81rz4m.execute-api.us-west-2.amazonaws.com/dev"
+var API = "https://5tg3bs55i7.execute-api.us-west-2.amazonaws.com/dev"
 function select_cipher(ele) {
   let svg = '<svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>'
   const ciphers = ["caesar", "linear", "vigenere"]
@@ -91,12 +91,13 @@ async function encode() {
 async function decode() {
   let ciphertext = document.getElementById("ciphertext_textarea").value
   let cipher_type = document.getElementById("cipher_type").value
+  data = {
+    "ciphertext": ciphertext,
+  }
   if (cipher_type == "caesar"){
     let key = document.getElementById("caesar_shift").value
-    console.log(key)
-    data = {
-      "ciphertext": ciphertext,
-      "key": Number(key)
+    if (isNumeric(key)){
+      data["key"] = Number(key)
     }
     let path = "/cipher/caesar/decode"
     fetch(API+path, {
@@ -113,10 +114,9 @@ async function decode() {
   else if (cipher_type == 'linear'){
     let key_slope = document.getElementById("linear_slope").value
     let key_intercept = document.getElementById("linear_intercept").value
-    data = {
-      "ciphertext": ciphertext,
-      "a": Number(key_slope),
-      "b": Number(key_intercept)
+    if (isNumeric(key_slope) && isNumeric(key_intercept)){
+      data["a"] = Number(key_slope)
+      data["b"] = Number(key_intercept)
     }
     let path = "/cipher/linear/decode"
     fetch(API+path, {
@@ -133,11 +133,13 @@ async function decode() {
   else if (cipher_type == "vigenere"){
     let key = document.getElementById("vigenere_key").value
     let keylen = document.getElementById("vigenere_key_len").value
-    data = {
-      "ciphertext": ciphertext,
-      "key": key,
-      "keylen": Number(keylen)
+    if (!(key === "")){
+      data['key'] = key
     }
+    if (isNumeric(keylen)){
+      data['keylen'] = Number(keylen)
+    }
+    console.log(data)
     let path = "/cipher/vigenere/decode"
     fetch(API+path, {
       "method": "post",
@@ -166,7 +168,6 @@ function update_plaintext(decode_res) {
   }
 }
 
-function auto_grow(element) {
-  element.style.height = "5px";
-  element.style.height = (element.scrollHeight)+"px";
+function isNumeric(value) {
+  return /^-?\d+$/.test(value)
 }
