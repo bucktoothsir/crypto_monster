@@ -25,7 +25,9 @@ For Vigenere Cipher, you can choos to decode just with the length of the key or 
 The backend is hosted on AWS Lambda and AWS API Gateway. We employ Zappa for deployment automation.
 
 ```bash
+pip install -r requirements.txt
 cd backend
 pipenv shell
+# Update your API
 zappa update dev
 ```
