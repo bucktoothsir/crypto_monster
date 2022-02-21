@@ -16,7 +16,7 @@ Our algorithm supports decoding without key. Note that the longer the ciphers, t
 <img src="media/st2.png" width="80%" height="80%" />
 
 
-For Vigenere Cipher, you can choos to decode just with the length of the key or even nothing.
+For Vigenere Cipher, you can choose to decode just with the length of the key or even nothing.
 
 
 <img src="media/st3.png" width="80%" height="80%" />
@@ -24,7 +24,7 @@ For Vigenere Cipher, you can choos to decode just with the length of the key or 
 
 ## Backend 
 ### Deployment
-The backend is hosted on AWS Lambda and AWS API Gateway. We employ Zappa for deployment automation.
+The backend is  on AWS Lambda and AWS API Gateway. We employ Zappa for deployment automation.
 
 ```bash
 pip install -r requirements.txt
@@ -34,7 +34,7 @@ pipenv shell
 zappa update dev
 ```
 ## Frontend
-The frontend is hosted on AWS S3. You can also run it in the local enrironment. 
+The frontend is  on AWS S3. You can also run it in the local enrironment. 
 ### Run in local. 
 ```bash
 cd frontend
