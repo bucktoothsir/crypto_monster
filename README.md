@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A website to encode and decode classical ciphers. Now have support 
+A website to encode and decode classical ciphers. Now we support 
 1. Caesar Cipher
 2. Linear Cipher
 3. Vigenere Cipher
