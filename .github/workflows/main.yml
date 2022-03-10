@@ -60,6 +60,7 @@ jobs:
     
       - name: Zappa deployments
         run: |
+          cd backend
           pwd
           pipenv run zappa update production
 
