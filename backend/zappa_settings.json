@@ -5,7 +5,16 @@
         "profile_name": "default",
         "project_name": "backend",
         "runtime": "python3.9",
-        "s3_bucket": "crypto-monster",
+        "s3_bucket": "crypto-monster-dev",
+        "cors": true
+    }
+    production": {
+        "app_function": "app.app",
+        "aws_region": "us-west-2",
+        "profile_name": "default",
+        "project_name": "backend",
+        "runtime": "python3.9",
+        "s3_bucket": "crypto-monster-production",
         "cors": true
     }
 }
