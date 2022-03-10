@@ -117,7 +117,6 @@ jobs:
         run: |
           cd backend
           pipenv install
-          pipenv run zappa deploy production
     
       - name: Zappa deployments
         run: |
