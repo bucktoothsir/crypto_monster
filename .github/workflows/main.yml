@@ -96,6 +96,7 @@ jobs:
       - name: Install plugin
         run: |
           pip install pipenv
+          pip install zappa
           
       - name: Cache pipenv virtualenv
         id: cache-pipenv
@@ -104,21 +105,23 @@ jobs:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
 
+      - name: Configure AWS profile
+        run: |
+          pipenv run aws configure set region us-east-1 --profile default
+          pipenv run aws configure set output json --profile default
+          pipenv run aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile default
+          pipenv run aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
+          
       - name: Initialize virtual environment
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
           cd backend
           pipenv install
-      
-      - name: Configure AWS profile
-        run: |
-          aws configure set region us-east-1 --profile default
-          aws configure set output json --profile default
-          aws configure set aws_access_key_id ${{ secrets.PRIMARY_AWS_ACCESS_KEY_ID }} --profile default
-          aws configure set aws_secret_access_key ${{ secrets.PRIMARY_AWS_SECRET_ACCESS_KEY }} --profile default
+          pipenv run zappa init
+          pipenv run zappa deploy production
     
       - name: Zappa deployments
         run: |
-          zappa update dev
+          pipenv run zappa update production
 
 
