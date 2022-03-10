@@ -61,6 +61,8 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
     steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
     # For pull requests it's not necessary to checkout the code
     - uses: dorny/paths-filter@v2
       id: filter
