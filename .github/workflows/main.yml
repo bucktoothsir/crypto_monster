@@ -53,7 +53,9 @@ jobs:
       - name: Initialize virtual environment
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: |
+          pwd
           cd backend
+          pwd
           pipenv install
     
       - name: Zappa deployments
