@@ -60,11 +60,11 @@ jobs:
       - name: Zappa deployments
         run: |
           cd backend
-          pipenv run zappa update --all
+          pipenv run zappa update production
           
       - name: check
         if: always()
         run: |
           cd backend
-          pipenv run zappa tail
+          pipenv run zappa tail production
 
