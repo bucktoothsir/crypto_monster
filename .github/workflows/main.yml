@@ -36,6 +36,7 @@ jobs:
         run: |
           pip install pipenv
           pip install zappa
+          pip install flask
           
       - name: Cache pipenv virtualenv
         id: cache-pipenv
