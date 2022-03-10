@@ -99,6 +99,7 @@ jobs:
           
       - name: Activate viritual environment
         run: |
+          cd backend
           pipenv shell
       
       - name: Configure AWS profile
