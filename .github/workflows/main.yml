@@ -29,6 +29,7 @@ jobs:
       - name: Install dependencies
         id: install-deps
         run: |
+          sudo apt-get install libpq-dev -y
           python -m pip install --upgrade pip
           
       - name: Install plugin
