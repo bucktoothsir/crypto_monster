@@ -67,4 +67,3 @@ jobs:
         run: |
           cd backend
           pipenv run zappa tail production
-
