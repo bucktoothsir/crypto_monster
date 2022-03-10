@@ -61,5 +61,10 @@ jobs:
         run: |
           cd backend
           pipenv run zappa update --all
-
+          
+      - name: check
+        if: always()
+        run: |
+          cd backend
+          pipenv run zappa tail
 
