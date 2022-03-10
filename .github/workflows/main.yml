@@ -96,6 +96,7 @@ jobs:
       - name: Install plugin
         run: |
           pip install pipenv
+          pip install zappa
           
       - name: Cache pipenv virtualenv
         id: cache-pipenv
