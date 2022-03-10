@@ -15,70 +15,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:  
-  # the first job build
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.9
-          
-      - name: Install dependencies
-        id: install-deps
-        run: |
-          python -m pip install --upgrade pip
-          
-      - name: Install plugin
-        run: |
-          pip install -r requirements.txt
-          pip install pytest-github-actions-annotate-failures
-          pip install wemake-python-styleguide
-          
-      - name: Test with pytest
-        run: pytest
-        
-      - name: Wemake Python Stylguide
-        uses: wemake-services/wemake-python-styleguide@0.16.0
-        continue-on-error: true
-        with:
-          reporter: 'github-pr-review'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-  # the second job to run change detection
-  changes:
-    needs: build
-    runs-on: ubuntu-latest
-    # Set job outputs to values from filter step
-    outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    # For pull requests it's not necessary to checkout the code
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          backend:
-            - 'backend/**'
-            - 'Pipfile*'
-            - 'zappa_settings.json'
-          frontend:
-            - 'frontend/**'
-            
   # JOB to deploy backend on AWS LAMBDA
   backend:
-    needs: changes
-    if: ${{ needs.changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -120,6 +58,7 @@ jobs:
     
       - name: Zappa deployments
         run: |
+          pwd
           pipenv run zappa update production
 
 
