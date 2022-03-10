@@ -8,7 +8,7 @@
         "s3_bucket": "crypto-monster-dev",
         "cors": true
     }
-    production": {
+    "production": {
         "app_function": "app.app",
         "aws_region": "us-west-2",
         "profile_name": "default",
