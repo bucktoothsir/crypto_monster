@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
+jobs:  
+  # the first job build
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -24,25 +24,26 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v1
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
         with:
           python-version: 3.9
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
+          
       - name: Install dependencies
         id: install-deps
         run: |
           python -m pip install --upgrade pip
+          
       - name: Install plugin
         run: |
           pip install -r requirements.txt
           pip install pytest-github-actions-annotate-failures
           pip install wemake-python-styleguide
+          
       - name: Test with pytest
         run: pytest
+        
       - name: Wemake Python Stylguide
         uses: wemake-services/wemake-python-styleguide@0.16.0
         continue-on-error: true
@@ -50,3 +51,63 @@ jobs:
           reporter: 'github-pr-review'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  # the second job to run change detection
+  changes:
+    needs: build
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          backend:
+            - 'backend/**'
+            - 'Pipfile*'
+            - 'zappa_settings.json'
+          frontend:
+            - 'frontend/**'
+            
+  # JOB to deploy backend on AWS LAMBDA
+  backend:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+          
+      - name: Install dependencies
+        id: install-deps
+        run: |
+          python -m pip install --upgrade pip
+          
+      - name: Install plugin
+        run: |
+          pip install pipenv
+          
+      - name: Activate viritual environment
+        run: |
+          pipenv shell
+      
+      - name: Configure AWS profile
+        run: |
+          aws configure set region us-east-1 --profile default
+          aws configure set output json --profile default
+          aws configure set aws_access_key_id ${{ secrets.PRIMARY_AWS_ACCESS_KEY_ID }} --profile default
+          aws configure set aws_secret_access_key ${{ secrets.PRIMARY_AWS_SECRET_ACCESS_KEY }} --profile default
+    
+      - name: Zappa deployments
+        run: |
+          zappa update dev
+
+
