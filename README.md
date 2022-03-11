@@ -23,16 +23,17 @@ For Vigenere Cipher, you can choose to decode just with the length of the key or
 <img src="media/st4.png" width="80%" height="80%" />
 
 ## Backend 
-### Deployment
-The backend is  on AWS Lambda and AWS API Gateway. We employ Zappa for deployment automation.
+### Automatation Deployment
+The backend is on AWS Lambda and AWS API Gateway. We employ Zappa for automation deploymentation.
 
 ```bash
 pip install -r requirements.txt
 cd backend
 pipenv shell
-# Update your API
+# Update your dev API in localhost 
 zappa update dev
 ```
+Production API will be deployed automately by Github Actions.
 ## Frontend
 The frontend is  on AWS S3. You can also run it in the local enrironment. 
 ### Run in local. 
