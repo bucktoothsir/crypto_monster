@@ -55,7 +55,7 @@ jobs:
   # the second job to run change detection
   changes:
     needs: build
-    runs-on: -latest
+    runs-on: ubuntu-latest
     # Set job outputs to values from filter step
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
