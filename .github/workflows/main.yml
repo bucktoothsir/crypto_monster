@@ -124,4 +124,39 @@ jobs:
         run: |
           cd backend
           pipenv run zappa update production
-        
+
+  # JOB to deploy frontend on AWS S3
+  frontend:
+    needs: changes
+    runs-on: ubuntu-latest
+    if: ${{ needs.changes.outputs.frontend == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Configure AWS profile
+        run: |
+          pipenv run aws configure set region us-east-1 --profile default
+          pipenv run aws configure set output json --profile default
+          pipenv run aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile default
+          pipenv run aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
+
+      - name: Install dependencies and Build
+        run: |
+          cd frontend
+          npm install -D tailwindcss
+          npm install -D flowbite
+          npm install -D boxicons
+          npx tailwindcss -i ./src/input.css -o ./dist/output.css
+          
+      - name: Deploy
+        uses: reggionick/s3-deploy@v3
+        with:
+          folder: frontend
+          bucket: ${{ secrets.S3_BUCKET }}
+          bucket-region: us-east-1
+          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: true 
+     
