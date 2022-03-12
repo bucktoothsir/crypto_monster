@@ -142,11 +142,10 @@ jobs:
 
       - name: Install dependencies and Build
         run: |
-          cd frontend
           npm install -D tailwindcss
           npm install -D flowbite
           npm install -D boxicons
-          npx tailwindcss -i ./src/input.css -o ./dist/output.css
+          npx tailwindcss -i frontend/src/input.css -o frontend/dist/output.css
           
       - name: Deploy
         uses: reggionick/s3-deploy@v3
