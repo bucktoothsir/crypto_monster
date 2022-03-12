@@ -135,10 +135,10 @@ jobs:
     
       - name: Configure AWS profile
         run: |
-          run aws configure set region us-east-1 --profile default
-          run aws configure set output json --profile default
-          run aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile default
-          run aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
+          aws configure set region us-east-1 --profile default
+          aws configure set output json --profile default
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} --profile default
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} --profile default
 
       - name: Install dependencies and Build
         run: |
