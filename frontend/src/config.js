@@ -1,4 +1,4 @@
-const API = "https://5tg3bs55i7.execute-api.us-west-2.amazonaws.com/dev/cipher/";
+const API = "https://vluiday23m.execute-api.us-west-2.amazonaws.com/production/cipher/";
 const configData = {
     "CIPHER_OPTIONS": ["Caesar Cipher", "Linear Cipher", "Vigenère Cipher"],
     "DEFAULT_CIPHER": "Caesar Cipher",
