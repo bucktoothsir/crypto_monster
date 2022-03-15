@@ -34,15 +34,17 @@ pipenv shell
 zappa update dev
 ```
 Production API will be deployed automately by Github Actions.
+
 ## Frontend
-The frontend is  on AWS S3. You can also run it in the local enrironment. 
+The frontend is developed by React and hosted on AWS S3. You can also run it in the local enrironment. 
 ### Run in local. 
 ```bash
 cd frontend
-npm install -D tailwindcss
-npm install -D flowbite
-npm install -D boxicons
-npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+npm install -D
+#test in localhost 
+npm run start
+# build
+npm run build
 ```
 ### Deployment
 Todo
