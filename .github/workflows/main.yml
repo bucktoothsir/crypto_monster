@@ -129,6 +129,8 @@ jobs:
   frontend:
     needs: changes
     runs-on: ubuntu-latest
+    env:
+      CI: false
     if: ${{ needs.changes.outputs.frontend == 'true' }}
     steps:
       - uses: actions/checkout@v2
