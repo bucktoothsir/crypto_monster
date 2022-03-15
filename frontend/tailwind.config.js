@@ -1,14 +1,11 @@
 module.exports = {
-  content: ["./index.html"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
-    fontSize: {
-      'xxs': '.55rem',
-    },
-  },
-  variants: {
-    outline: ["focus"],
+    extend: {},
   },
   plugins: [
     require('flowbite/plugin')
-]
+  ],
 }
