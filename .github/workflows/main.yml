@@ -143,16 +143,13 @@ jobs:
       - name: Install dependencies and Build
         run: |
           cd frontend
-          npm install -D tailwindcss
-          npm install -D flowbite
-          npm install -D boxicons
-          npx tailwindcss -i ./src/input.css -o ./dist/output.css
-          rm -rf node_modules
+          npm install -D 
+          npm run build
           
       - name: Deploy
         uses: reggionick/s3-deploy@v3
         with:
-          folder: frontend
+          folder: frontend/build
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: us-east-1
           dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
