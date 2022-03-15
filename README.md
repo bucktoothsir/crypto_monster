@@ -47,4 +47,7 @@ npm run start
 npm run build
 ```
 ### Deployment
-Todo
+```bash
+aws s3 cp build/* s3://crypto-monster/
+```
+Automation deploymentation will be triggered when files in frontend directory are changed.
